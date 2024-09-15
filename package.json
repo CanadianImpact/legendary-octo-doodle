@@ -1,0 +1,30 @@
+{
+  "name": "legendary-octo-doodle",
+  "version": "1.0.0",
+  "description": "This is a template repository for the first assignment in BVD 103 at McMaster Continuing Education.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-server": "tsx ./src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/cors": "^5.0.0",
+    "axios": "^1.7.7",
+    "koa": "^2.15.3",
+    "koa-bodyparser": "^4.4.1",
+    "koa-qs": "^3.0.0",
+    "koa-router": "^13.0.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.15.0",
+    "@types/koa__cors": "^5.0.0",
+    "@types/koa-bodyparser": "^4.3.12",
+    "@types/koa-qs": "^2.0.3",
+    "@types/koa-router": "^7.4.8",
+    "typescript": "^5.6.2"
+  }
+}
