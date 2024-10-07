@@ -1,3 +1,8 @@
+use("mcmastefulBookDB");
+
+db.books.insertMany(
+
+
 [
     {
         "name": "Giant's Bread",
@@ -55,4 +60,5 @@
         "price": 91.99,
         "image": "https://m.media-amazon.com/images/I/71Qde+ZerdL._SL1500_.jpg"
     }
-]
+])
+

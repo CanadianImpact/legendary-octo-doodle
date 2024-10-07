@@ -1,24 +1,26 @@
+// src/server.ts
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
-import koaQs from 'koa-qs';
-import router from './routes';
 import cors from '@koa/cors';
+import booksRoutes from '../src/routes';
+import { connectDB } from './db';
 
 const app = new Koa();
+const PORT = process.env.PORT || 3000;
 
-// Enhance query string parsing
-koaQs(app);
-
-// Middleware to parse request bodies
-app.use(bodyParser());
+// Middleware
 app.use(cors());
+app.use(bodyParser());
 
-// Routes
-app.use(router.routes());
-app.use(router.allowedMethods());
+// Load routes
+app.use(booksRoutes.routes());
+app.use(booksRoutes.allowedMethods());
 
-// Start the server
-const port = 3000;
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+// Start server and connect to MongoDB
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+    });
+}).catch((err) => {
+    console.error('Failed to start server:', err);
 });

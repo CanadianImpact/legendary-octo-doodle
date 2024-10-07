@@ -10,6 +10,6 @@ export const bookSchema = z.object({
 });
 
 // Type for book data
-export type Book = z.infer<typeof bookSchema>;
+export type BookSchema = z.infer<typeof bookSchema>;
 
 
