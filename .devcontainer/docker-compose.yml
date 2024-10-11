@@ -4,6 +4,8 @@ services:
   dev:
     image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bookworm
     user: root
+    ports:
+      - "9080:9080"
     volumes:
       - ../..:/workspaces:cached
     command: sleep infinity

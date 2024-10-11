@@ -1,25 +1,11 @@
 // src/db.ts
-import { MongoClient, Db } from 'mongodb';
+import { MongoClient } from 'mongodb';
+import { Book } from '../adapter/assignment-2';
+const mongoURI = 'mongodb://mongo/';
 
-const mongoURI = process.env.MONGO_URI || 'mongodb://mongo/';
-const dbName = 'mcmastefulBookDB';
 
-let db: Db | null = null;
 
-export const connectDB = async (): Promise<void> => {
-    try {
-        const client = new MongoClient(mongoURI);
-        await client.connect();
-        console.log('Connected to MongoDB');
-        db = client.db(dbName);
-    } catch (err) {
-        console.error('Error connecting to MongoDB:', err);
-    }
-};
 
-export const getDB = (): Db => {
-    if (!db) {
-        throw new Error('Database not connected');
-    }
-    return db;
-};
+export const client = new MongoClient(mongoURI);
+export const database = client.db("bookstore");
+export const book_collection = database.collection<Book>("books");

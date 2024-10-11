@@ -1,4 +1,4 @@
-use("mcmastefulBookDB");
+use("bookstore");
 
 db.books.insertMany(
 
