@@ -14,5 +14,11 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node16",
     "resolveJsonModule": true,
-  }
+
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts"], // Include all TypeScript files
+  "exclude": ["node_modules"]
 }
