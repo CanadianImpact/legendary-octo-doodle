@@ -3,6 +3,8 @@ import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 import cors from '@koa/cors'
 import booksRoutes from '../src/routes'
+import orderroute from './orderroute'
+import shelveroutes from './warehouse/placebookonshelve'
 
 const app = new Koa()
 
@@ -15,7 +17,9 @@ app.use(
 app.use(bodyParser())
 
 // Load routes
+app.use(orderroute.routes()).use(orderroute.allowedMethods())
 app.use(booksRoutes.routes()).use(booksRoutes.allowedMethods())
+app.use(shelveroutes.routes()).use(shelveroutes.allowedMethods())
 
 app.listen(3000, () => {
   console.log('listening')

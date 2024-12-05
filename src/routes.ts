@@ -9,6 +9,51 @@ import { z } from 'zod'
 const router = new Router({
     prefix: '/books',
 })
+// Get a single book by ID
+router.get('/:id', async (ctx: Context) => {
+    try {
+        const bookId = ctx.params.id
+
+        // Validate the book ID using Zod to ensure it has 24 characters (ObjectId format)
+        const paramsSchema = z.object({
+            id: z.string().length(24, 'ID must be 24 characters long'), // Assuming ObjectId
+        })
+
+        const parsedParams = paramsSchema.parse(ctx.params)
+        const { id } = parsedParams
+
+        // Convert the string ID to MongoDB ObjectId
+        const objectId = new ObjectId(id)
+
+        // Fetch the book from the database
+        const book = await book_collection.findOne({ _id: objectId })
+
+        if (book) {
+            // Return the book data in the response
+            ctx.body = {
+                id: book._id.toHexString(),
+                name: book.name,
+                description: book.description,
+                price: book.price,
+                author: book.author,
+                image: book.image,
+            }
+        } else {
+            ctx.status = 404 // Not Found
+            ctx.body = { message: 'Book not found' }
+        }
+    } catch (error) {
+        console.error('GET request error:', error)
+
+        if (error instanceof z.ZodError) {
+            ctx.status = 400
+            ctx.body = { message: 'Invalid book ID format', errors: error.errors }
+        } else {
+            ctx.status = 500
+            ctx.body = { message: 'Internal server error', error: error.message }
+        }
+    }
+})
 
 // Get all books
 router.get('/', async ctx => {
