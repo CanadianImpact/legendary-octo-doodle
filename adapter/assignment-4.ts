@@ -111,9 +111,16 @@ async function orderBooks (order: BookID[]): Promise<{ orderId: OrderId }> {
     }
   }
 
-async function fulfilOrder (order: OrderId, booksFulfilled: Array<{ book: BookID, shelf: ShelfId, numberOfBooks: number }>): Promise<void> {
-  throw new Error("Todo")
-}3
+  async function fulfilOrder (order: OrderId, booksFulfilled: Array<{ book: BookID, shelf: ShelfId, numberOfBooks: number }>): Promise<void> {
+    const result = await fetch(`http://localhost:3000/fulfil/${order}`, {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(booksFulfilled)
+    })
+    if (!result.ok) {
+      throw new Error(`Couldnt Fulfil ${await result.text()}`)
+    }
+  }
 
 async function listOrders (): Promise<Array<{ orderId: OrderId, books: Record<BookID, number> }>> {
   const result = await fetch('http://localhost:3000/order')
